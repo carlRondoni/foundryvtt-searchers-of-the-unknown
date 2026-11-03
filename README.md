@@ -1,103 +1,111 @@
-# Searchers of the Unknown para Foundry VTT
+# Searchers of the Unknown for Foundry VTT
+
+[Español](README.es.md) · **English**
 
 ![Foundry VTT](https://img.shields.io/badge/Foundry-v13%20%E2%80%93%20v14-orange)
-![Versión](https://img.shields.io/badge/versi%C3%B3n-0.4.0-blue)
-![Licencia](https://img.shields.io/badge/licencia-MIT-green)
+![Version](https://img.shields.io/badge/version-0.5.0-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-Sistema de juego para [Foundry VTT](https://foundryvtt.com) basado en **Searchers of the Unknown**, la forma mínima de jugar D&D old-school de Nicolas Dessaux. CA descendente, d20 por debajo, PG = dados de golpe y fichas que caben en una línea.
+A game system for [Foundry VTT](https://foundryvtt.com) based on **Searchers of the Unknown**, Nicolas Dessaux's minimalist way to play old-school D&D: descending AC, roll-under d20, HP = hit dice, and characters that fit on one line. It adds house rules and solo-play tools.
 
-> *English summary:* a Foundry VTT game system for Searchers of the Unknown, a minimalist old-school D&D ruleset. Descending AC, roll-under d20, level 0 start, plus solo-play tools (oracles, background tables). UI in Spanish.
+The interface is **bilingual (English / Spanish)** and follows each user's Foundry language setting.
 
----
+## Features
 
-## Características
+**Game rules**
+- **AC and MV are calculated** from armor and shield.
+- Characters start at **level 0 with a fixed 4 HP**. On level up, all hit dice are re-rolled and the better total is kept.
+- Number of attacks by level (1, 2 at level 5, 3 at level 9...).
+- Built-in rolls: **attack** (d20 ≤ target AC + level, uses the targeted token), **stealth and stunts**, **saving throw**, **dangers** (1d8 / 2d8 / 4d8) and monster **morale**.
+- **Exploding damage dice**: a die that rolls its maximum is re-rolled and added.
+- **Initiative** `1d10 + AC`.
+- Weapons as items (small d4, ranged d6, melee d8, two-handed d10), with a **random weapon** button.
 
-**Reglas del juego**
-- Personajes con **CA y MV calculados** a partir de la armadura y el escudo.
-- Empiezan en **nivel 0 con 4 PG fijos**. Al subir de nivel se vuelven a tirar todos los dados de golpe y se conserva el mejor resultado.
-- Número de ataques según el nivel (1, 2 en nivel 5, 3 en nivel 9...).
-- Tiradas integradas: **ataque** (d20 ≤ CA del objetivo + nivel, usa el objetivo marcado), **sigilo y proezas**, **salvación**, **peligros** (1d8 / 2d8 / 4d8) y **moral** de monstruos.
-- **Dados de daño explosivos**: si sale el máximo del dado, se vuelve a tirar y se acumula.
-- **Iniciativa** `1d10 + CA`.
-- Armas como objetos (pequeña d4, distancia d6, cuerpo a cuerpo d8, dos manos d10), con **arma aleatoria**.
+**Character creation**
+- **Race** (human, dark elf, dwarf, half-orc, half-elf, halfling) and **sex** selectors, with a one-time random race roll.
+- **Random name** by race and sex.
+- Three **background tables** (reason to adventure, dark secret, family background); the result is added to the description.
+- Two-tab sheet: **Sheet** and **Background**.
 
-**Creación de personaje**
-- Selector de **raza** (humano, elfo oscuro, enano, semiorco, semielfo, mediano) y **sexo**, con tirada aleatoria de raza (una sola vez).
-- **Nombre aleatorio** según raza y sexo.
-- Tres **tablas de trasfondo** (razón para aventurarse, secreto oscuro y origen familiar) cuyo resultado se añade a la descripción.
-- Ficha con dos pestañas: **Ficha** y **Trasfondo**.
+**Solo-play tools**
+- **Oracle** Yes/No (1d6) and **Guiding question** (who, what, where, when, why, how).
+- **Action and Theme oracles** (1d100) and **Inspiration**, which gives one Action and one Theme at once.
+- Every table is created as a world *Rollable Table*.
 
-**Herramientas de juego en solitario**
-- **Oráculo** Sí/No (1d6) y **Pregunta guía** (quién, qué, dónde, cuándo, por qué, cómo).
-- **Oráculos de Acción y Tema** (1d100) y **Inspiración**, que da una Acción y un Tema a la vez.
-- Todas las tablas se crean como *Rollable Tables* del mundo, así que puedes editarlas o traducirlas.
+## Languages
 
-## Módulos recomendados
+The UI and the table texts are available in **English and Spanish**. Rolls on tables show the text in the language of the user who rolls. The world's Rollable Tables are created in the language of the GM who first loads the world.
 
-Se declaran como recomendados en el manifiesto; el sistema funciona sin ellos.
+To add a language: copy `lang/en.json` as `lang/<code>.json`, translate it, register it in `system.json` (`languages`) and add its texts to `module/tables-text.mjs`.
 
-| Módulo | Para qué |
+## Recommended modules
+
+Declared as recommended in the manifest; the system works without them.
+
+| Module | Purpose |
 |---|---|
-| [Dice So Nice](https://foundryvtt.com/packages/dice-so-nice) | Dados 3D animados en todas las tiradas |
-| [Dice Tray](https://foundryvtt.com/packages/dice-calculator) | Atajos de dados en el chat (d4, d6, d8, d10, d20) |
+| [Dice So Nice](https://foundryvtt.com/packages/dice-so-nice) | Animated 3D dice on every roll |
+| [Dice Tray](https://foundryvtt.com/packages/dice-calculator) | Dice shortcuts in the chat (d4, d6, d8, d10, d20) |
 
-## Instalación
+## Installation
 
-**Con la URL del manifiesto** (cuando haya una *release* publicada):
+**Manifest URL** (once a release is published):
 
-1. En Foundry: *Game Systems → Install System*.
-2. Pega en *Manifest URL*:
+1. In Foundry: *Game Systems → Install System*.
+2. Paste into *Manifest URL*:
    ```
    https://github.com/carlRondoni/foundryvtt-searchers-of-the-unknown/releases/latest/download/system.json
    ```
 
 **Manual:**
 
-1. Descarga el `.zip` de la última *release*.
-2. Descomprímelo en `Data/systems/` de modo que quede `Data/systems/searchers-of-the-unknown/system.json`.
-3. Reinicia Foundry y crea un mundo con este sistema.
+1. Download the `.zip` from the latest release.
+2. Extract it to `Data/systems/` so you get `Data/systems/searchers-of-the-unknown/system.json`.
+3. Restart Foundry and create a world with this system.
 
-> La carpeta del sistema debe llamarse **`searchers-of-the-unknown`** (el `id` del sistema), aunque el repositorio se llame distinto.
+> The system folder must be named **`searchers-of-the-unknown`** (the system `id`), even if the repository has a different name.
 
-## Uso rápido
+## Quick use
 
-| Acción | Cómo |
+| Action | How |
 |---|---|
-| Consultar el Oráculo | `Alt + O` |
-| Pregunta guía | `Alt + P` |
-| Inspiración (Acción + Tema) | `Alt + I` |
+| Consult the Oracle | `Alt + O` |
+| Guiding question | `Alt + P` |
+| Inspiration (Action + Theme) | `Alt + I` |
 
-Los atajos se pueden cambiar en *Configuración → Configurar controles*. También hay macros: `game.sotu.rollOracle()`, `game.sotu.rollQuestion()`, `game.sotu.rollAction()`, `game.sotu.rollTheme()` y `game.sotu.rollInspiration()`.
+Shortcuts can be changed in *Settings → Configure Controls*. Macros are also available: `game.sotu.rollOracle()`, `game.sotu.rollQuestion()`, `game.sotu.rollAction()`, `game.sotu.rollTheme()` and `game.sotu.rollInspiration()`.
 
-## Estructura
+## Project structure
 
 ```
 searchers-of-the-unknown/
-├── system.json          manifiesto
-├── searchers.mjs        punto de entrada (registro, atajos, hooks)
+├── system.json          manifest
+├── searchers.mjs        entry point (registration, shortcuts, hooks)
+├── lang/                en.json, es.json
 ├── module/
-│   ├── config.mjs       armaduras, armas, razas, sexos
-│   ├── data.mjs         modelos de datos (personaje, monstruo, arma)
-│   ├── actor.mjs        tiradas y reglas
-│   ├── sheets.mjs       hojas de actor y objeto
-│   ├── tables.mjs       tablas de trasfondo y de ayuda
-│   └── names.mjs        listas de nombres por raza y sexo
-├── templates/           plantillas Handlebars
+│   ├── config.mjs       armor, weapons, races, sexes
+│   ├── data.mjs         data models (character, monster, weapon)
+│   ├── actor.mjs        rolls and rules
+│   ├── sheets.mjs       actor and item sheets
+│   ├── tables.mjs       table structure and rolling
+│   ├── tables-text.mjs  table texts, per language
+│   └── names.mjs        name lists by race and sex
+├── templates/           Handlebars templates
 └── styles/              CSS
 ```
 
-## Hoja de ruta
+## Roadmap
 
-- [ ] Rastreador de exploración (turnos de mazmorra, exteriores y asaltos de combate) con tirada de encuentros.
-- [ ] Comandos de chat para los oráculos.
-- [ ] Antorchas, descansos y temporizadores.
-- [ ] Aplicar el daño automáticamente a los objetivos.
+- [ ] Exploration tracker (dungeon turns, overland turns and combat rounds) with encounter rolls.
+- [ ] Chat commands for the oracles.
+- [ ] Torches, rests and timers.
+- [ ] Apply damage to targets automatically.
 
-## Créditos y licencias
+## Credits and licenses
 
-- **Searchers of the Unknown** es obra de Nicolas Dessaux. Este proyecto es un trabajo de aficionado, sin ánimo de lucro y no afiliado a su autor. Este repositorio no incluye el texto del juego: para jugar necesitas el manual original.
-- Los **oráculos de Acción y Tema** son los de *Ironsworn*, de Shawn Tomkin, bajo licencia [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), traducidos al español.
-- Las **tablas de trasfondo**: <!-- TODO: indicar la fuente y su licencia antes de publicar -->
-- *Dungeons & Dragons* es marca registrada de Wizards of the Coast. Este proyecto no está afiliado a ellos ni reclama derechos sobre la marca.
-- *Foundry Virtual Tabletop* es marca de Foundry Gaming LLC. Este proyecto no está afiliado a ellos.
-- El **código** se publica bajo licencia [MIT](LICENSE).
+- **Searchers of the Unknown** is the work of Nicolas Dessaux. This is an unofficial fan project, non-commercial and not affiliated with its author. This repository does not include the game's text: you need the original rulebook to play.
+- The **Action and Theme oracles** are from *Ironsworn* by Shawn Tomkin, under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), translated to Spanish.
+- The **background tables** (reason to adventure, dark secret and family background) come from *Liberation of the Demon Slayer* by Venger Satanis (Kort'thalis Publishing), translated to Spanish. <!-- TODO: confirm the module's license, or get the author's permission, before publishing these texts -->
+- *Dungeons & Dragons* is a registered trademark of Wizards of the Coast. This project is not affiliated with them and claims no rights over the mark.
+- *Foundry Virtual Tabletop* is a trademark of Foundry Gaming LLC. This project is not affiliated with them.
+- The **code** is released under the [MIT](LICENSE) license.

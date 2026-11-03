@@ -1,11 +1,9 @@
-import { ARMORS, WEAPONS, RACES, SEXES } from "./config.mjs";
+import { SYSTEM_ID, ARMORS, WEAPONS, RACES, SEXES, loc, localized } from "./config.mjs";
 import { BACKGROUND_TABLES } from "./tables.mjs";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2, ItemSheetV2 } = foundry.applications.sheets;
-const TPL = "systems/searchers-of-the-unknown/templates";
-
-const labels = (table, fn) => Object.fromEntries(Object.entries(table).map(([k, v]) => [k, fn(v)]));
+const TPL = `systems/${SYSTEM_ID}/templates`;
 
 export class SotuActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
   /** Pestaña activa; se conserva entre re-renderizados. */
@@ -31,8 +29,8 @@ export class SotuActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       rollRace: SotuActorSheet.#rollRace,
       rollWeapon: SotuActorSheet.#rollWeapon,
       rollBackground: SotuActorSheet.#rollBackground,
-      changeTab: SotuActorSheet.#changeTab,
       rollName: SotuActorSheet.#rollName,
+      changeTab: SotuActorSheet.#changeTab
     }
   };
 
@@ -43,25 +41,31 @@ export class SotuActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     const actor = this.document;
     const isCharacter = actor.type === "character";
     const weapons = actor.itemTypes.weapon;
+    const ac = loc("SOTU.Sheet.AC");
+    const mv = loc("SOTU.Sheet.MV");
     return Object.assign(ctx, {
       actor,
       system: actor.system,
       isCharacter,
       tabs: [
-        { id: "sheet", label: "Ficha", active: this.#tab === "sheet" },
-        { id: "background", label: isCharacter ? "Trasfondo" : "Descripción", active: this.#tab === "background" }
+        { id: "sheet", label: loc("SOTU.Sheet.TabSheet"), active: this.#tab === "sheet" },
+        {
+          id: "background",
+          label: loc(isCharacter ? "SOTU.Sheet.TabBackground" : "SOTU.Sheet.TabDescription"),
+          active: this.#tab === "background"
+        }
       ],
       showSheet: this.#tab === "sheet",
       showBackground: this.#tab === "background",
-      races: RACES,
-      sexes: SEXES,
-      armors: labels(ARMORS, a => `${a.label} (CA ${a.ac}, MV ${a.mv})`),
+      races: localized(RACES, loc),
+      sexes: localized(SEXES, loc),
+      armors: localized(ARMORS, a => `${loc(a.label)} (${ac} ${a.ac}, ${mv} ${a.mv})`),
       weapons,
       canRollWeapon: isCharacter && weapons.length < actor.weaponLimit,
       backgrounds: isCharacter
-        ? Object.entries(BACKGROUND_TABLES)
-            .filter(([key]) => !actor.system.backgroundRolled?.[key])
-            .map(([key, d]) => ({ key, label: d.title }))
+        ? Object.keys(BACKGROUND_TABLES)
+            .filter(key => !actor.system.backgroundRolled?.[key])
+            .map(key => ({ key, label: loc(`SOTU.TableLabel.${key}`) }))
         : []
     });
   }
@@ -81,7 +85,7 @@ export class SotuActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
   static #danger(event, target) { return this.document.danger(target.dataset.dice); }
   static #morale() { return this.document.morale(); }
   static #addWeapon() {
-    return this.document.createEmbeddedDocuments("Item", [{ name: "Nueva arma", type: "weapon" }]);
+    return this.document.createEmbeddedDocuments("Item", [{ name: loc("SOTU.Sheet.NewWeapon"), type: "weapon" }]);
   }
   static #editWeapon(event, target) { return this.#item(target)?.sheet.render(true); }
   static #deleteWeapon(event, target) { return this.#item(target)?.delete(); }
@@ -112,7 +116,7 @@ export class SotuItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
     return Object.assign(ctx, {
       item: this.document,
       system: this.document.system,
-      categories: labels(WEAPONS, w => `${w.label} · ${w.die}`)
+      categories: localized(WEAPONS, w => `${loc(w.label)} · ${w.die}`)
     });
   }
 }

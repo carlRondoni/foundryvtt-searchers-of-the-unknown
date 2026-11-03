@@ -1,87 +1,84 @@
 <section class="sotu-sheet">
   <header class="sotu-header">
     <div class="sotu-name-row">
-      <input class="sotu-name" type="text" name="name" value="{{actor.name}}" placeholder="Nombre">
+      <input class="sotu-name" type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'SOTU.Sheet.Name'}}">
       {{#if isCharacter}}
-      <button type="button" data-action="rollName" title="Nombre aleatorio (según raza y sexo)">🎲</button>
+        <button type="button" data-action="rollName" title="{{localize 'SOTU.Sheet.RollName'}}">🎲</button>
       {{/if}}
     </div>
   </header>
 
   <nav class="sotu-tabs">
     {{#each tabs}}
-    <button type="button" class="sotu-tab {{#if this.active}}active{{/if}}" data-action="changeTab"
-      data-nav-tab="{{this.id}}">{{this.label}}</button>
+      <button type="button" class="sotu-tab {{#if this.active}}active{{/if}}" data-action="changeTab" data-nav-tab="{{this.id}}">{{this.label}}</button>
     {{/each}}
   </nav>
 
-  {{!-- ===================== PESTAÑA: FICHA ===================== --}}
+  {{!-- ===================== TAB: SHEET ===================== --}}
   <div class="sotu-panel {{#if showSheet}}active{{/if}}" data-panel="sheet">
 
     <div class="sotu-stats">
-      <div class="stat"><label>CA</label>
+      <div class="stat"><label>{{localize 'SOTU.Sheet.AC'}}</label>
         {{#if isCharacter}}<span class="big">{{system.ac}}</span>
         {{else}}<input type="number" name="system.ac" value="{{system.ac}}">{{/if}}
       </div>
-      <div class="stat"><label>MV</label>
+      <div class="stat"><label>{{localize 'SOTU.Sheet.MV'}}</label>
         {{#if isCharacter}}<span class="big">{{system.mv}}</span>
         {{else}}<input type="number" name="system.mv" value="{{system.mv}}">{{/if}}
       </div>
-      <div class="stat"><label>{{#if isCharacter}}Nivel (DG){{else}}DG{{/if}}</label>
+      <div class="stat"><label>{{#if isCharacter}}{{localize 'SOTU.Sheet.LevelHD'}}{{else}}{{localize 'SOTU.Sheet.HD'}}{{/if}}</label>
         {{#if isCharacter}}<input type="number" name="system.level" value="{{system.level}}" min="0">
         {{else}}<input type="number" name="system.hd" value="{{system.hd}}" min="1">{{/if}}
       </div>
-      <div class="stat"><label>#AT</label>
+      <div class="stat"><label>{{localize 'SOTU.Sheet.Attacks'}}</label>
         {{#if isCharacter}}<span class="big">{{system.attacks}}</span>
         {{else}}<input type="number" name="system.attacks" value="{{system.attacks}}" min="1">{{/if}}
       </div>
-      <div class="stat hp"><label>PG</label>
+      <div class="stat hp"><label>{{localize 'SOTU.Sheet.HP'}}</label>
         <span class="hp-inputs">
           <input type="number" name="system.hp.value" value="{{system.hp.value}}">
           /
-          <input type="number" name="system.hp.max" value="{{system.hp.max}}" min="0" {{#if isCharacter}}{{#unless
-            system.level}}disabled{{/unless}}{{/if}}>
+          <input type="number" name="system.hp.max" value="{{system.hp.max}}" min="0" {{#if isCharacter}}{{#unless system.level}}disabled{{/unless}}{{/if}}>
         </span>
       </div>
     </div>
 
     {{#if isCharacter}}
     <fieldset class="sotu-gear">
-      <legend>Equipo y experiencia</legend>
-      <label>Armadura
+      <legend>{{localize 'SOTU.Sheet.GearLegend'}}</legend>
+      <label>{{localize 'SOTU.Sheet.Armor'}}
         <select name="system.armor">{{selectOptions armors selected=system.armor}}</select>
       </label>
-      <label class="inline"><input type="checkbox" name="system.shield" {{checked system.shield}}> Escudo (CA −1, MV
-        −1)</label>
-      <label>PX <input type="number" name="system.xp" value="{{system.xp}}" min="0"> / {{system.xpNeeded}}</label>
+      <label class="inline"><input type="checkbox" name="system.shield" {{checked system.shield}}> {{localize 'SOTU.Sheet.Shield'}}</label>
+      <label>{{localize 'SOTU.Sheet.XP'}} <input type="number" name="system.xp" value="{{system.xp}}" min="0"> / {{system.xpNeeded}}</label>
       <div class="buttons">
         {{#if system.level}}
-        {{#unless system.hpRolled}}
-        <button type="button" data-action="rollHP">Tirar PG ({{system.level}}d8)</button>
-        {{/unless}}
+          {{#unless system.hpRolled}}
+            <button type="button" data-action="rollHP">{{localize 'SOTU.Sheet.RollHP' level=system.level}}</button>
+          {{/unless}}
         {{/if}}
-        <button type="button" data-action="levelUp">Subir de nivel</button>
+        <button type="button" data-action="levelUp">{{localize 'SOTU.Sheet.LevelUp'}}</button>
       </div>
     </fieldset>
     {{else}}
     <fieldset class="sotu-gear">
-      <legend>Monstruo</legend>
-      <label>Daño (D) <input type="text" name="system.damage" value="{{system.damage}}"></label>
-      <div>Valor en PX: <b>{{system.xpValue}}</b></div>
+      <legend>{{localize 'SOTU.Sheet.MonsterLegend'}}</legend>
+      <label>{{localize 'SOTU.Sheet.Damage'}} <input type="text" name="system.damage" value="{{system.damage}}"></label>
+      <div>{{localize 'SOTU.Sheet.XPValue'}} <b>{{system.xpValue}}</b></div>
     </fieldset>
     {{/if}}
 
     <fieldset class="sotu-actions">
-      <legend>Acciones</legend>
+      <legend>{{localize 'SOTU.Sheet.ActionsLegend'}}</legend>
       <div class="buttons">
-        <button type="button" data-action="attack">Atacar{{#unless isCharacter}} ({{system.damage}}){{/unless}}</button>
-        <button type="button" data-action="stealth">Sigilo / proezas</button>
-        <button type="button" data-action="save">Salvación</button>
-        <button type="button" data-action="rest">Descansar</button>
-        {{#unless isCharacter}}<button type="button" data-action="morale">Moral</button>{{/unless}}
+        <button type="button" data-action="attack">{{localize 'SOTU.Sheet.Attack'}}{{#unless isCharacter}} ({{system.damage}}){{/unless}}</button>
+        <button type="button" data-action="stealth">{{localize 'SOTU.Sheet.Stealth'}}</button>
+        <button type="button" data-action="save">{{localize 'SOTU.Sheet.Save'}}</button>
+        <button type="button" data-action="rest">{{localize 'SOTU.Sheet.Rest'}}</button>
+        {{#unless isCharacter}}<button type="button" data-action="morale">{{localize 'SOTU.Sheet.Morale'}}</button>{{/unless}}
       </div>
       <div class="buttons">
-        <span>Peligro:</span>
+        <span>{{localize 'SOTU.Sheet.Danger'}}</span>
         <button type="button" data-action="danger" data-dice="1d8">1d8</button>
         <button type="button" data-action="danger" data-dice="2d8">2d8</button>
         <button type="button" data-action="danger" data-dice="4d8">4d8</button>
@@ -90,11 +87,11 @@
 
     <fieldset class="sotu-weapons">
       <div class="sotu-weapons-header">
-        <span class="title">Armas</span>
+        <span class="title">{{localize 'SOTU.Sheet.Weapons'}}</span>
         <div class="sotu-weapons-buttons">
-          <button type="button" data-action="addWeapon" title="Añadir arma">+</button>
+          <button type="button" data-action="addWeapon" title="{{localize 'SOTU.Sheet.AddWeapon'}}">+</button>
           {{#if canRollWeapon}}
-          <button type="button" data-action="rollWeapon" title="Arma aleatoria">🎲</button>
+            <button type="button" data-action="rollWeapon" title="{{localize 'SOTU.Sheet.RollWeapon'}}">🎲</button>
           {{/if}}
         </div>
       </div>
@@ -104,37 +101,36 @@
           <img src="{{this.img}}" width="24" height="24">
           <span class="wname">{{this.name}}</span>
           <span>{{this.system.damage}}</span>
-          <button type="button" data-action="attack" data-item-id="{{this.id}}">Atacar</button>
-          <button type="button" data-action="editWeapon">✎</button>
-          <button type="button" data-action="deleteWeapon">🗑</button>
+          <button type="button" data-action="attack" data-item-id="{{this.id}}">{{localize 'SOTU.Sheet.Attack'}}</button>
+          <button type="button" data-action="editWeapon" title="{{localize 'SOTU.Sheet.EditWeapon'}}">✎</button>
+          <button type="button" data-action="deleteWeapon" title="{{localize 'SOTU.Sheet.DeleteWeapon'}}">🗑</button>
         </li>
         {{/each}}
       </ul>
     </fieldset>
   </div>
 
-  {{!-- ================= PESTAÑA: TRASFONDO / DESCRIPCIÓN ================= --}}
+  {{!-- ============ TAB: BACKGROUND / DESCRIPTION ============ --}}
   <div class="sotu-panel {{#if showBackground}}active{{/if}}" data-panel="background">
 
     {{#if isCharacter}}
-    <div class="sotu-race">
-      <select name="system.race">{{selectOptions races selected=system.race}}</select>
-      <select class="sotu-sex" name="system.sex">{{selectOptions sexes selected=system.sex}}</select>
-      {{#unless system.raceRolled}}
-      <button type="button" data-action="rollRace" title="Raza aleatoria (solo una vez)">🎲</button>
-      {{/unless}}
-    </div>
+      <div class="sotu-race">
+        <select name="system.race">{{selectOptions races selected=system.race}}</select>
+        <select class="sotu-sex" name="system.sex">{{selectOptions sexes selected=system.sex}}</select>
+        {{#unless system.raceRolled}}
+          <button type="button" data-action="rollRace" title="{{localize 'SOTU.Sheet.RollRace'}}">🎲</button>
+        {{/unless}}
+      </div>
 
-    {{#if backgrounds.length}}
-    <div class="sotu-background">
-      {{#each backgrounds}}
-      <button type="button" data-action="rollBackground" data-table="{{this.key}}">🎲 {{this.label}}</button>
-      {{/each}}
-    </div>
-    {{/if}}
+      {{#if backgrounds.length}}
+        <div class="sotu-background">
+          {{#each backgrounds}}
+            <button type="button" data-action="rollBackground" data-table="{{this.key}}">🎲 {{this.label}}</button>
+          {{/each}}
+        </div>
+      {{/if}}
     {{/if}}
 
-    <textarea class="sotu-bio" name="system.biography"
-      placeholder="Descripción, historia previa como aventurero…">{{system.biography}}</textarea>
+    <textarea class="sotu-bio" name="system.biography" placeholder="{{localize 'SOTU.Sheet.BioPlaceholder'}}">{{system.biography}}</textarea>
   </div>
 </section>

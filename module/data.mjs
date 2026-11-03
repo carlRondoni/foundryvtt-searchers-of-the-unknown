@@ -15,19 +15,19 @@ export class CharacterData extends TypeDataModel {
         value: new NumberField({ required: true, integer: true, initial: 4 }), // puede ser <= 0
         max: int(4)
       }),
+      hpRolled: new BooleanField({ initial: false }),
       armor: new StringField({ required: true, initial: "none", choices: Object.keys(ARMORS) }),
       shield: new BooleanField({ initial: false }),
       race: new StringField({ required: true, initial: "human", choices: Object.keys(RACES) }),
-      sex: new StringField({ required: true, initial: "male", choices: Object.keys(SEXES) }),
       raceRolled: new BooleanField({ initial: false }),
-      hpRolled: new BooleanField({ initial: false }),
-      biography: new StringField({ initial: "" }),
+      sex: new StringField({ required: true, initial: "male", choices: Object.keys(SEXES) }),
       backgroundRolled: new SchemaField({
         reason: new BooleanField({ initial: false }),
         secret: new BooleanField({ initial: false }),
         station: new BooleanField({ initial: false })
       }),
-    }; 
+      biography: new StringField({ initial: "" })
+    };
   }
 
   static migrateData(source) {

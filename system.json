@@ -1,10 +1,10 @@
 {
   "id": "searchers-of-the-unknown",
   "title": "Searchers of the Unknown",
-  "description": "Sistema mínimo para jugar D&D old-school basado en las reglas de Nicolas Dessaux. CA descendente, d20 por debajo, PG = dados de golpe.",
-  "version": "0.4.0",
+  "description": "Minimal old-school D&D system based on Nicolas Dessaux's Searchers of the Unknown, with house rules and solo-play tools. / Sistema D&D old-school mínimo basado en Searchers of the Unknown, con reglas caseras y herramientas de juego en solitario.",
+  "version": "0.5.0",
   "compatibility": {
-    "minimum": "14",
+    "minimum": "13",
     "verified": "14"
   },
   "authors": [
@@ -17,6 +17,18 @@
   ],
   "styles": [
     "styles/searchers.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    },
+    {
+      "lang": "es",
+      "name": "Español",
+      "path": "lang/es.json"
+    }
   ],
   "documentTypes": {
     "Actor": {

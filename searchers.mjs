@@ -1,10 +1,13 @@
 import { SotuActor } from "./module/actor.mjs";
 import { CharacterData, MonsterData, WeaponData } from "./module/data.mjs";
 import { SotuActorSheet, SotuItemSheet } from "./module/sheets.mjs";
-import { seedBackgroundTables, rollOracle, rollQuestion, rollAction, rollTheme, rollInspiration, SYSTEM_ID } from "./module/tables.mjs";
+import { SYSTEM_ID, loc } from "./module/config.mjs";
+import {
+  seedTables, rollOracle, rollQuestion, rollAction, rollTheme, rollInspiration
+} from "./module/tables.mjs";
 
 Hooks.once("init", () => {
-  console.log("Searchers of the Unknown | Inicializando");
+  console.log("Searchers of the Unknown | Inicializando / Initializing");
 
   CONFIG.Actor.documentClass = SotuActor;
   CONFIG.Actor.dataModels = { character: CharacterData, monster: MonsterData };
@@ -14,38 +17,45 @@ Hooks.once("init", () => {
   CONFIG.Combat.initiative = { formula: "1d10 + @ac", decimals: 2 };
 
   const { DocumentSheetConfig } = foundry.applications.apps;
-  DocumentSheetConfig.registerSheet(Actor, "searchers-of-the-unknown", SotuActorSheet, {
-    types: ["character", "monster"], makeDefault: true, label: "Searchers of the Unknown"
+  DocumentSheetConfig.registerSheet(Actor, SYSTEM_ID, SotuActorSheet, {
+    types: ["character", "monster"], makeDefault: true, label: "SOTU.Sheet"
   });
-  DocumentSheetConfig.registerSheet(Item, "searchers-of-the-unknown", SotuItemSheet, {
-    types: ["weapon"], makeDefault: true, label: "Searchers of the Unknown"
+  DocumentSheetConfig.registerSheet(Item, SYSTEM_ID, SotuItemSheet, {
+    types: ["weapon"], makeDefault: true, label: "SOTU.Sheet"
   });
+
+  // Registro de las tablas ya creadas en el mundo
   game.settings.register(SYSTEM_ID, "seededTables", {
     scope: "world", config: false, type: Object, default: {}
   });
-  // Atajo de teclado (reasignable en Configurar controles)
+
+  // Atajos de teclado (reasignables en Configurar controles)
   game.keybindings.register(SYSTEM_ID, "oracle", {
-    name: "Consultar el Oráculo",
-    hint: "Tira 1d6 en la tabla del Oráculo (Sí/No).",
+    name: "SOTU.Keys.Oracle",
+    hint: "SOTU.Keys.OracleHint",
     editable: [{ key: "KeyO", modifiers: ["Alt"] }],
     onDown: () => { rollOracle(); return true; }
   });
-
   game.keybindings.register(SYSTEM_ID, "question", {
-    name: "Pregunta guía",
-    hint: "Tira 1d6: quién, qué, dónde, cuándo, por qué o cómo.",
+    name: "SOTU.Keys.Question",
+    hint: "SOTU.Keys.QuestionHint",
     editable: [{ key: "KeyP", modifiers: ["Alt"] }],
     onDown: () => { rollQuestion(); return true; }
   });
-
   game.keybindings.register(SYSTEM_ID, "inspiration", {
-    name: "Inspiración (Acción + Tema)",
-    hint: "Tira una Acción y un Tema aleatorios.",
+    name: "SOTU.Keys.Inspiration",
+    hint: "SOTU.Keys.InspirationHint",
     editable: [{ key: "KeyI", modifiers: ["Alt"] }],
     onDown: () => { rollInspiration(); return true; }
   });
 
+  // Para macros: game.sotu.rollOracle(), etc.
   game.sotu = { rollOracle, rollQuestion, rollAction, rollTheme, rollInspiration };
+});
+
+// El GM crea las tablas (en su idioma) la primera vez que carga el mundo
+Hooks.once("ready", async () => {
+  if (game.user.isGM) await seedTables();
 });
 
 // Botón "Daño" dentro de los mensajes de ataque
@@ -56,12 +66,8 @@ Hooks.on("renderChatMessageHTML", (message, html) => {
       const roll = await new Roll(btn.dataset.sotuDamage).evaluate();
       await roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor }),
-        flavor: `<b>Daño</b> (${btn.dataset.sotuDamage}) · réstalo de los PG del objetivo`
+        flavor: loc("SOTU.Chat.DamageFlavor")
       });
     });
   });
-});
-
-Hooks.once("ready", async () => {
-  if (game.user.isGM) await seedBackgroundTables();
 });

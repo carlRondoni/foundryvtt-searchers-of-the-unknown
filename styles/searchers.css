@@ -1,206 +1,52 @@
-.sotu .sotu-sheet {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 8px;
-    height: 100%;
-    overflow-y: auto;
-}
-
-.sotu .sotu-header {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.sotu .sotu-name-row {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.sotu .sotu-name-row .sotu-name {
-    flex: 1;
-}
-
+.sotu .sotu-sheet { display: flex; flex-direction: column; gap: 8px; padding: 8px; height: 100%; overflow-y: auto; }
+.sotu .sotu-header { display: flex; flex-direction: column; gap: 6px; }
+.sotu .sotu-name { font-size: 1.6rem; font-weight: bold; }
+.sotu .sotu-name-row { display: flex; align-items: center; gap: 6px; }
+.sotu .sotu-name-row .sotu-name { flex: 1; }
 .sotu .sotu-name-row button {
-    flex: 0 0 auto;
-    width: 2.4rem;
-    height: var(--input-height, 2rem);
-    margin: 0;
-    padding: 0;
-    line-height: 1;
+  flex: 0 0 auto; width: 2.4rem; height: var(--input-height, 2rem);
+  margin: 0; padding: 0; line-height: 1;
 }
 
-.sotu .sotu-name {
-    font-size: 1.6rem;
-    font-weight: bold;
-}
-
-/* Pestañas */
-.sotu .sotu-tabs {
-    display: flex;
-    gap: 4px;
-    border-bottom: 1px solid var(--color-border-dark-tertiary, #888);
-}
-
+/* Pestañas / Tabs */
+.sotu .sotu-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--color-border-dark-tertiary, #888); }
 .sotu .sotu-tab {
-    flex: 0 0 auto;
-    width: auto;
-    margin: 0;
-    padding: 4px 14px;
-    border-radius: 4px 4px 0 0;
-    border-bottom: none;
-    opacity: 0.7;
+  flex: 0 0 auto; width: auto; margin: 0; padding: 4px 14px;
+  border-radius: 4px 4px 0 0; border-bottom: none; opacity: 0.7;
 }
+.sotu .sotu-tab.active { opacity: 1; font-weight: bold; }
+.sotu .sotu-panel { display: none; flex-direction: column; gap: 8px; }
+.sotu .sotu-panel.active { display: flex; }
 
-.sotu .sotu-tab.active {
-    opacity: 1;
-    font-weight: bold;
-}
+/* Ficha / Sheet */
+.sotu .sotu-stats { display: flex; gap: 8px; }
+.sotu .stat { flex: 1; text-align: center; border: 1px solid var(--color-border-dark-tertiary, #888); border-radius: 4px; padding: 4px; }
+.sotu .stat.hp { flex: 2; }
+.sotu .stat label { display: block; font-size: 0.75rem; text-transform: uppercase; }
+.sotu .stat .big { font-size: 1.6rem; font-weight: bold; }
+.sotu .hp-inputs { display: flex; align-items: center; gap: 4px; }
+.sotu fieldset { display: flex; flex-direction: column; gap: 6px; }
+.sotu .buttons { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
 
-.sotu .sotu-panel {
-    display: none;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.sotu .sotu-panel.active {
-    display: flex;
-}
-
-/* Ficha */
-.sotu .sotu-stats {
-    display: flex;
-    gap: 8px;
-}
-
-.sotu .stat {
-    flex: 1;
-    text-align: center;
-    border: 1px solid var(--color-border-dark-tertiary, #888);
-    border-radius: 4px;
-    padding: 4px;
-}
-
-.sotu .stat.hp {
-    flex: 2;
-}
-
-.sotu .stat label {
-    display: block;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-}
-
-.sotu .stat .big {
-    font-size: 1.6rem;
-    font-weight: bold;
-}
-
-.sotu .hp-inputs {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.sotu fieldset {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.sotu .buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    align-items: center;
-}
-
-/* Armas */
-.sotu .sotu-weapons ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.sotu .sotu-weapons li {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.sotu .sotu-weapons .wname {
-    flex: 1;
-}
-
-.sotu .sotu-weapons-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.sotu .sotu-weapons-header .title {
-    font-weight: bold;
-}
-
-.sotu .sotu-weapons-buttons {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
+/* Armas / Weapons */
+.sotu .sotu-weapons ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.sotu .sotu-weapons li { display: flex; align-items: center; gap: 6px; }
+.sotu .sotu-weapons .wname { flex: 1; }
+.sotu .sotu-weapons-header { display: flex; align-items: center; justify-content: space-between; }
+.sotu .sotu-weapons-header .title { font-weight: bold; }
+.sotu .sotu-weapons-buttons { display: flex; align-items: center; gap: 6px; }
 .sotu .sotu-weapons-buttons button {
-    flex: 0 0 auto;
-    width: 2rem;
-    height: 2rem;
-    margin: 0;
-    padding: 0;
-    line-height: 1;
+  flex: 0 0 auto; width: 2rem; height: 2rem; margin: 0; padding: 0; line-height: 1;
 }
 
-/* Trasfondo */
-.sotu .sotu-race {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.sotu .sotu-race select {
-    flex: 1;
-    height: var(--input-height, 2rem);
-}
-
-.sotu .sotu-race .sotu-sex {
-    flex: 0 0 auto;
-    width: auto;
-}
-
+/* Trasfondo / Background */
+.sotu .sotu-race { display: flex; align-items: center; gap: 6px; }
+.sotu .sotu-race select { flex: 1; height: var(--input-height, 2rem); }
+.sotu .sotu-race .sotu-sex { flex: 0 0 auto; width: auto; }
 .sotu .sotu-race button {
-    flex: 0 0 auto;
-    width: auto;
-    height: var(--input-height, 2rem);
-    margin: 0;
-    padding: 0 0.7rem;
-    line-height: 1;
+  flex: 0 0 auto; width: auto; height: var(--input-height, 2rem);
+  margin: 0; padding: 0 0.7rem; line-height: 1;
 }
-
-.sotu .sotu-background {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-}
-
-.sotu .sotu-background button {
-    flex: 1 1 auto;
-    width: auto;
-    margin: 0;
-}
-
-.sotu .sotu-bio {
-    min-height: 260px;
-    resize: vertical;
-}
+.sotu .sotu-background { display: flex; flex-wrap: wrap; gap: 6px; }
+.sotu .sotu-background button { flex: 1 1 auto; width: auto; margin: 0; }
+.sotu .sotu-bio { min-height: 260px; resize: vertical; }
