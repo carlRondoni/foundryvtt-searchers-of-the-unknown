@@ -1,0 +1,140 @@
+<section class="sotu-sheet">
+  <header class="sotu-header">
+    <div class="sotu-name-row">
+      <input class="sotu-name" type="text" name="name" value="{{actor.name}}" placeholder="Nombre">
+      {{#if isCharacter}}
+      <button type="button" data-action="rollName" title="Nombre aleatorio (según raza y sexo)">🎲</button>
+      {{/if}}
+    </div>
+  </header>
+
+  <nav class="sotu-tabs">
+    {{#each tabs}}
+    <button type="button" class="sotu-tab {{#if this.active}}active{{/if}}" data-action="changeTab"
+      data-nav-tab="{{this.id}}">{{this.label}}</button>
+    {{/each}}
+  </nav>
+
+  {{!-- ===================== PESTAÑA: FICHA ===================== --}}
+  <div class="sotu-panel {{#if showSheet}}active{{/if}}" data-panel="sheet">
+
+    <div class="sotu-stats">
+      <div class="stat"><label>CA</label>
+        {{#if isCharacter}}<span class="big">{{system.ac}}</span>
+        {{else}}<input type="number" name="system.ac" value="{{system.ac}}">{{/if}}
+      </div>
+      <div class="stat"><label>MV</label>
+        {{#if isCharacter}}<span class="big">{{system.mv}}</span>
+        {{else}}<input type="number" name="system.mv" value="{{system.mv}}">{{/if}}
+      </div>
+      <div class="stat"><label>{{#if isCharacter}}Nivel (DG){{else}}DG{{/if}}</label>
+        {{#if isCharacter}}<input type="number" name="system.level" value="{{system.level}}" min="0">
+        {{else}}<input type="number" name="system.hd" value="{{system.hd}}" min="1">{{/if}}
+      </div>
+      <div class="stat"><label>#AT</label>
+        {{#if isCharacter}}<span class="big">{{system.attacks}}</span>
+        {{else}}<input type="number" name="system.attacks" value="{{system.attacks}}" min="1">{{/if}}
+      </div>
+      <div class="stat hp"><label>PG</label>
+        <span class="hp-inputs">
+          <input type="number" name="system.hp.value" value="{{system.hp.value}}">
+          /
+          <input type="number" name="system.hp.max" value="{{system.hp.max}}" min="0" {{#if isCharacter}}{{#unless
+            system.level}}disabled{{/unless}}{{/if}}>
+        </span>
+      </div>
+    </div>
+
+    {{#if isCharacter}}
+    <fieldset class="sotu-gear">
+      <legend>Equipo y experiencia</legend>
+      <label>Armadura
+        <select name="system.armor">{{selectOptions armors selected=system.armor}}</select>
+      </label>
+      <label class="inline"><input type="checkbox" name="system.shield" {{checked system.shield}}> Escudo (CA −1, MV
+        −1)</label>
+      <label>PX <input type="number" name="system.xp" value="{{system.xp}}" min="0"> / {{system.xpNeeded}}</label>
+      <div class="buttons">
+        {{#if system.level}}
+        {{#unless system.hpRolled}}
+        <button type="button" data-action="rollHP">Tirar PG ({{system.level}}d8)</button>
+        {{/unless}}
+        {{/if}}
+        <button type="button" data-action="levelUp">Subir de nivel</button>
+      </div>
+    </fieldset>
+    {{else}}
+    <fieldset class="sotu-gear">
+      <legend>Monstruo</legend>
+      <label>Daño (D) <input type="text" name="system.damage" value="{{system.damage}}"></label>
+      <div>Valor en PX: <b>{{system.xpValue}}</b></div>
+    </fieldset>
+    {{/if}}
+
+    <fieldset class="sotu-actions">
+      <legend>Acciones</legend>
+      <div class="buttons">
+        <button type="button" data-action="attack">Atacar{{#unless isCharacter}} ({{system.damage}}){{/unless}}</button>
+        <button type="button" data-action="stealth">Sigilo / proezas</button>
+        <button type="button" data-action="save">Salvación</button>
+        <button type="button" data-action="rest">Descansar</button>
+        {{#unless isCharacter}}<button type="button" data-action="morale">Moral</button>{{/unless}}
+      </div>
+      <div class="buttons">
+        <span>Peligro:</span>
+        <button type="button" data-action="danger" data-dice="1d8">1d8</button>
+        <button type="button" data-action="danger" data-dice="2d8">2d8</button>
+        <button type="button" data-action="danger" data-dice="4d8">4d8</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="sotu-weapons">
+      <div class="sotu-weapons-header">
+        <span class="title">Armas</span>
+        <div class="sotu-weapons-buttons">
+          <button type="button" data-action="addWeapon" title="Añadir arma">+</button>
+          {{#if canRollWeapon}}
+          <button type="button" data-action="rollWeapon" title="Arma aleatoria">🎲</button>
+          {{/if}}
+        </div>
+      </div>
+      <ul>
+        {{#each weapons}}
+        <li data-item-id="{{this.id}}">
+          <img src="{{this.img}}" width="24" height="24">
+          <span class="wname">{{this.name}}</span>
+          <span>{{this.system.damage}}</span>
+          <button type="button" data-action="attack" data-item-id="{{this.id}}">Atacar</button>
+          <button type="button" data-action="editWeapon">✎</button>
+          <button type="button" data-action="deleteWeapon">🗑</button>
+        </li>
+        {{/each}}
+      </ul>
+    </fieldset>
+  </div>
+
+  {{!-- ================= PESTAÑA: TRASFONDO / DESCRIPCIÓN ================= --}}
+  <div class="sotu-panel {{#if showBackground}}active{{/if}}" data-panel="background">
+
+    {{#if isCharacter}}
+    <div class="sotu-race">
+      <select name="system.race">{{selectOptions races selected=system.race}}</select>
+      <select class="sotu-sex" name="system.sex">{{selectOptions sexes selected=system.sex}}</select>
+      {{#unless system.raceRolled}}
+      <button type="button" data-action="rollRace" title="Raza aleatoria (solo una vez)">🎲</button>
+      {{/unless}}
+    </div>
+
+    {{#if backgrounds.length}}
+    <div class="sotu-background">
+      {{#each backgrounds}}
+      <button type="button" data-action="rollBackground" data-table="{{this.key}}">🎲 {{this.label}}</button>
+      {{/each}}
+    </div>
+    {{/if}}
+    {{/if}}
+
+    <textarea class="sotu-bio" name="system.biography"
+      placeholder="Descripción, historia previa como aventurero…">{{system.biography}}</textarea>
+  </div>
+</section>

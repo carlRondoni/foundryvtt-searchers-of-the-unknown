@@ -1,0 +1,8 @@
+<section class="sotu-sheet">
+  <input class="sotu-name" type="text" name="name" value="{{item.name}}" placeholder="Nombre">
+  <label>Categoría
+    <select name="system.category">{{selectOptions categories selected=system.category}}</select>
+  </label>
+  <div>Daño: <b>{{system.damage}}</b></div>
+  <textarea name="system.description" placeholder="Descripción">{{system.description}}</textarea>
+</section>

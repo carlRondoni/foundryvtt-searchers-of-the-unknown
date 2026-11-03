@@ -1,0 +1,47 @@
+{
+  "id": "searchers-of-the-unknown",
+  "title": "Searchers of the Unknown",
+  "description": "Sistema mínimo para jugar D&D old-school basado en las reglas de Nicolas Dessaux. CA descendente, d20 por debajo, PG = dados de golpe.",
+  "version": "0.4.0",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14"
+  },
+  "authors": [
+    {
+      "name": "Carl A. Rondoni"
+    }
+  ],
+  "esmodules": [
+    "searchers.mjs"
+  ],
+  "styles": [
+    "styles/searchers.css"
+  ],
+  "documentTypes": {
+    "Actor": {
+      "character": {},
+      "monster": {}
+    },
+    "Item": {
+      "weapon": {}
+    }
+  },
+  "relationships": {
+    "recommends": [
+      {
+        "id": "dice-so-nice",
+        "type": "module"
+      },
+      {
+        "id": "dice-calculator",
+        "type": "module"
+      }
+    ]
+  },
+  "grid": {
+    "distance": 1,
+    "units": ""
+  },
+  "primaryTokenAttribute": "hp"
+}
