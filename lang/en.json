@@ -2,7 +2,7 @@
   "TYPES.Actor.character": "Character",
   "TYPES.Actor.monster": "Monster",
   "TYPES.Item.weapon": "Weapon",
-  "SOTU.Sheet": "Searchers of the Unknown",
+  "SOTU.SheetLabel": "Searchers of the Unknown",
   "SOTU.Sheet.Name": "Name",
   "SOTU.Sheet.TabSheet": "Sheet",
   "SOTU.Sheet.TabBackground": "Background",

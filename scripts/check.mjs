@@ -39,6 +39,9 @@ if (lang.en && lang.es) {
     else if (!(k in lang.es)) fail(`Falta en lang/es.json: ${k}`);
     else if (ph(lang.en[k]) !== ph(lang.es[k])) fail(`Placeholders distintos en ${k}`);
   }
+  // Foundry expande los puntos y descarta TODO el archivo si una clave es texto y a la vez padre de otra
+  const keys = Object.keys(lang.en);
+  for (const k of keys) if (keys.some(x => x.startsWith(`${k}.`))) fail(`Clave a la vez texto y padre de otras: ${k}`);
   // 4. Todas las claves SOTU.* usadas en código y plantillas existen
   for (const f of files.filter(f => /\.(mjs|hbs)$/.test(f) && !f.includes("lang/"))) {
     for (const [k] of read(f).matchAll(/SOTU\.[A-Za-z0-9_.]*[A-Za-z0-9_]\.?/g)) {

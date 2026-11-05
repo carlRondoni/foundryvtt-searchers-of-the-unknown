@@ -3,7 +3,7 @@
 **Español** · [English](README.md)
 
 ![Foundry VTT](https://img.shields.io/badge/Foundry-v13%20%E2%80%93%20v14-orange)
-![Versión](https://img.shields.io/badge/versi%C3%B3n-0.6.0-blue)
+![Versión](https://img.shields.io/badge/versi%C3%B3n-0.6.1-blue)
 ![Licencia](https://img.shields.io/badge/licencia-MIT-green)
 
 Sistema de juego para [Foundry VTT](https://foundryvtt.com) basado en **Searchers of the Unknown**, la forma mínima de jugar D&D old-school de Nicolas Dessaux: CA descendente, d20 por debajo, PG = dados de golpe y fichas que caben en una línea.

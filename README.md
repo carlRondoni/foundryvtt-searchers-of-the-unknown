@@ -3,7 +3,7 @@
 [Español](README.es.md) · **English**
 
 ![Foundry VTT](https://img.shields.io/badge/Foundry-v13%20%E2%80%93%20v14-orange)
-![Version](https://img.shields.io/badge/version-0.6.0-blue)
+![Version](https://img.shields.io/badge/version-0.6.1-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 A game system for [Foundry VTT](https://foundryvtt.com) based on **Searchers of the Unknown**, Nicolas Dessaux's minimalist way to play old-school D&D: descending AC, roll-under d20, HP = hit dice, and characters that fit on one line.

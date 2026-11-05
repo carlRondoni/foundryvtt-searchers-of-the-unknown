@@ -2,7 +2,7 @@
   "id": "searchers-of-the-unknown",
   "title": "Searchers of the Unknown",
   "description": "Minimal old-school D&D system based on Nicolas Dessaux's Searchers of the Unknown. / Sistema D&D old-school mínimo basado en Searchers of the Unknown de Nicolas Dessaux.",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "compatibility": {
     "minimum": "13",
     "verified": "14"

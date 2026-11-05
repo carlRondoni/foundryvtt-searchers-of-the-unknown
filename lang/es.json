@@ -2,7 +2,7 @@
   "TYPES.Actor.character": "Personaje",
   "TYPES.Actor.monster": "Monstruo",
   "TYPES.Item.weapon": "Arma",
-  "SOTU.Sheet": "Searchers of the Unknown",
+  "SOTU.SheetLabel": "Searchers of the Unknown",
   "SOTU.Sheet.Name": "Nombre",
   "SOTU.Sheet.TabSheet": "Ficha",
   "SOTU.Sheet.TabBackground": "Trasfondo",

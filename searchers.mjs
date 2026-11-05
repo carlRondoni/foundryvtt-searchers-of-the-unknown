@@ -15,10 +15,10 @@ Hooks.once("init", () => {
 
   const { DocumentSheetConfig } = foundry.applications.apps;
   DocumentSheetConfig.registerSheet(Actor, SYSTEM_ID, SotuActorSheet, {
-    types: ["character", "monster"], makeDefault: true, label: "SOTU.Sheet"
+    types: ["character", "monster"], makeDefault: true, label: "SOTU.SheetLabel"
   });
   DocumentSheetConfig.registerSheet(Item, SYSTEM_ID, SotuItemSheet, {
-    types: ["weapon"], makeDefault: true, label: "SOTU.Sheet"
+    types: ["weapon"], makeDefault: true, label: "SOTU.SheetLabel"
   });
 });
 

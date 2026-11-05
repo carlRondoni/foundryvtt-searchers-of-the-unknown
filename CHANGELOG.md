@@ -4,6 +4,11 @@
 
 All notable changes to this project are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and versions follow `0.MINOR.PATCH` (new feature → minor, fix → patch).
 
+## [0.6.1] - Translations fix
+
+### Fixed
+- The interface showed raw keys (`SOTU.Sheet.Name`…) instead of text. The key `SOTU.Sheet` was both a text and the parent of other keys, which made Foundry discard the whole language file. It is now `SOTU.SheetLabel`.
+
 ## [0.6.0] - Initial version
 
 ### Added
