@@ -4,6 +4,11 @@
 
 All notable changes to this project are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and versions follow `0.MINOR.PATCH` (new feature → minor, fix → patch).
 
+## [0.6.2] - Manifest URLs
+
+### Added
+- `url`, `manifest` and `download` in `system.json`, so Foundry can install and update the system from GitHub releases.
+
 ## [0.6.1] - Translations fix
 
 ### Fixed

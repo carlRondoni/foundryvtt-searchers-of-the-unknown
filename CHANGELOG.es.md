@@ -4,6 +4,11 @@
 
 Aquí se documentan los cambios importantes del proyecto. El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y las versiones siguen `0.MINOR.PATCH` (función nueva → minor, corrección → patch).
 
+## [0.6.2] - URLs del manifiesto
+
+### Añadido
+- `url`, `manifest` y `download` en `system.json`, para que Foundry pueda instalar y actualizar el sistema desde las *releases* de GitHub.
+
 ## [0.6.1] - Corrección de las traducciones
 
 ### Corregido
