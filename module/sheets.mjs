@@ -1,5 +1,4 @@
-import { SYSTEM_ID, ARMORS, WEAPONS, RACES, SEXES, loc, localized } from "./config.mjs";
-import { BACKGROUND_TABLES } from "./tables.mjs";
+import { SYSTEM_ID, ARMORS, WEAPONS, RACES, loc, localized } from "./config.mjs";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2, ItemSheetV2 } = foundry.applications.sheets;
@@ -26,10 +25,6 @@ export class SotuActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       addWeapon: SotuActorSheet.#addWeapon,
       editWeapon: SotuActorSheet.#editWeapon,
       deleteWeapon: SotuActorSheet.#deleteWeapon,
-      rollRace: SotuActorSheet.#rollRace,
-      rollWeapon: SotuActorSheet.#rollWeapon,
-      rollBackground: SotuActorSheet.#rollBackground,
-      rollName: SotuActorSheet.#rollName,
       changeTab: SotuActorSheet.#changeTab
     }
   };
@@ -40,7 +35,6 @@ export class SotuActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     const ctx = await super._prepareContext(options);
     const actor = this.document;
     const isCharacter = actor.type === "character";
-    const weapons = actor.itemTypes.weapon;
     const ac = loc("SOTU.Sheet.AC");
     const mv = loc("SOTU.Sheet.MV");
     return Object.assign(ctx, {
@@ -58,15 +52,8 @@ export class SotuActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       showSheet: this.#tab === "sheet",
       showBackground: this.#tab === "background",
       races: localized(RACES, loc),
-      sexes: localized(SEXES, loc),
       armors: localized(ARMORS, a => `${loc(a.label)} (${ac} ${a.ac}, ${mv} ${a.mv})`),
-      weapons,
-      canRollWeapon: isCharacter && weapons.length < actor.weaponLimit,
-      backgrounds: isCharacter
-        ? Object.keys(BACKGROUND_TABLES)
-            .filter(key => !actor.system.backgroundRolled?.[key])
-            .map(key => ({ key, label: loc(`SOTU.TableLabel.${key}`) }))
-        : []
+      weapons: actor.itemTypes.weapon
     });
   }
 
@@ -89,10 +76,6 @@ export class SotuActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
   }
   static #editWeapon(event, target) { return this.#item(target)?.sheet.render(true); }
   static #deleteWeapon(event, target) { return this.#item(target)?.delete(); }
-  static #rollRace() { return this.document.rollRace(); }
-  static #rollWeapon() { return this.document.rollWeapon(); }
-  static #rollBackground(event, target) { return this.document.rollBackground(target.dataset.table); }
-  static #rollName() { return this.document.rollName(); }
 
   static #changeTab(event, target) {
     this.#tab = target.dataset.navTab;

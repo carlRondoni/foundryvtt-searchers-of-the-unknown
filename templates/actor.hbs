@@ -1,11 +1,6 @@
 <section class="sotu-sheet">
   <header class="sotu-header">
-    <div class="sotu-name-row">
-      <input class="sotu-name" type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'SOTU.Sheet.Name'}}">
-      {{#if isCharacter}}
-        <button type="button" data-action="rollName" title="{{localize 'SOTU.Sheet.RollName'}}">🎲</button>
-      {{/if}}
-    </div>
+    <input class="sotu-name" type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'SOTU.Sheet.Name'}}">
   </header>
 
   <nav class="sotu-tabs">
@@ -27,7 +22,7 @@
         {{else}}<input type="number" name="system.mv" value="{{system.mv}}">{{/if}}
       </div>
       <div class="stat"><label>{{#if isCharacter}}{{localize 'SOTU.Sheet.LevelHD'}}{{else}}{{localize 'SOTU.Sheet.HD'}}{{/if}}</label>
-        {{#if isCharacter}}<input type="number" name="system.level" value="{{system.level}}" min="0">
+        {{#if isCharacter}}<input type="number" name="system.level" value="{{system.level}}" min="1">
         {{else}}<input type="number" name="system.hd" value="{{system.hd}}" min="1">{{/if}}
       </div>
       <div class="stat"><label>{{localize 'SOTU.Sheet.Attacks'}}</label>
@@ -38,7 +33,7 @@
         <span class="hp-inputs">
           <input type="number" name="system.hp.value" value="{{system.hp.value}}">
           /
-          <input type="number" name="system.hp.max" value="{{system.hp.max}}" min="0" {{#if isCharacter}}{{#unless system.level}}disabled{{/unless}}{{/if}}>
+          <input type="number" name="system.hp.max" value="{{system.hp.max}}" min="0">
         </span>
       </div>
     </div>
@@ -52,11 +47,9 @@
       <label class="inline"><input type="checkbox" name="system.shield" {{checked system.shield}}> {{localize 'SOTU.Sheet.Shield'}}</label>
       <label>{{localize 'SOTU.Sheet.XP'}} <input type="number" name="system.xp" value="{{system.xp}}" min="0"> / {{system.xpNeeded}}</label>
       <div class="buttons">
-        {{#if system.level}}
-          {{#unless system.hpRolled}}
-            <button type="button" data-action="rollHP">{{localize 'SOTU.Sheet.RollHP' level=system.level}}</button>
-          {{/unless}}
-        {{/if}}
+        {{#unless system.hpRolled}}
+          <button type="button" data-action="rollHP">{{localize 'SOTU.Sheet.RollHP' level=system.level}}</button>
+        {{/unless}}
         <button type="button" data-action="levelUp">{{localize 'SOTU.Sheet.LevelUp'}}</button>
       </div>
     </fieldset>
@@ -90,9 +83,6 @@
         <span class="title">{{localize 'SOTU.Sheet.Weapons'}}</span>
         <div class="sotu-weapons-buttons">
           <button type="button" data-action="addWeapon" title="{{localize 'SOTU.Sheet.AddWeapon'}}">+</button>
-          {{#if canRollWeapon}}
-            <button type="button" data-action="rollWeapon" title="{{localize 'SOTU.Sheet.RollWeapon'}}">🎲</button>
-          {{/if}}
         </div>
       </div>
       <ul>
@@ -116,19 +106,7 @@
     {{#if isCharacter}}
       <div class="sotu-race">
         <select name="system.race">{{selectOptions races selected=system.race}}</select>
-        <select class="sotu-sex" name="system.sex">{{selectOptions sexes selected=system.sex}}</select>
-        {{#unless system.raceRolled}}
-          <button type="button" data-action="rollRace" title="{{localize 'SOTU.Sheet.RollRace'}}">🎲</button>
-        {{/unless}}
       </div>
-
-      {{#if backgrounds.length}}
-        <div class="sotu-background">
-          {{#each backgrounds}}
-            <button type="button" data-action="rollBackground" data-table="{{this.key}}">🎲 {{this.label}}</button>
-          {{/each}}
-        </div>
-      {{/if}}
     {{/if}}
 
     <textarea class="sotu-bio" name="system.biography" placeholder="{{localize 'SOTU.Sheet.BioPlaceholder'}}">{{system.biography}}</textarea>

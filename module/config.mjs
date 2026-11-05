@@ -12,27 +12,19 @@ export const ARMORS = {
 };
 export const SHIELD = { ac: -1, mv: -1 };
 
-/** examples: sufijos de SOTU.WeaponName.* usados por el arma aleatoria */
 export const WEAPONS = {
-  small:     { label: "SOTU.WeaponCategory.small",     short: "SOTU.WeaponShort.small",     die: "1d4",  examples: ["dagger", "sling", "knife"] },
-  range:     { label: "SOTU.WeaponCategory.range",     short: "SOTU.WeaponShort.range",     die: "1d6",  examples: ["bow", "crossbow", "javelin"] },
-  melee:     { label: "SOTU.WeaponCategory.melee",     short: "SOTU.WeaponShort.melee",     die: "1d8",  examples: ["mace", "sword", "hammer"] },
-  twohanded: { label: "SOTU.WeaponCategory.twohanded", short: "SOTU.WeaponShort.twohanded", die: "1d10", examples: ["greatsword", "polearm", "battleaxe"] }
+  small:     { label: "SOTU.WeaponCategory.small",     die: "1d4" },
+  range:     { label: "SOTU.WeaponCategory.range",     die: "1d6" },
+  melee:     { label: "SOTU.WeaponCategory.melee",     die: "1d8" },
+  twohanded: { label: "SOTU.WeaponCategory.twohanded", die: "1d10" }
 };
 
-/** El orden es el de la tirada aleatoria (1d6). */
+/** Solo descriptivas: la raza no tiene efecto en las reglas. */
 export const RACES = {
-  human:    "SOTU.Race.human",
-  darkelf:  "SOTU.Race.darkelf",
-  dwarf:    "SOTU.Race.dwarf",
-  halforc:  "SOTU.Race.halforc",
-  halfelf:  "SOTU.Race.halfelf",
-  halfling: "SOTU.Race.halfling"
-};
-
-export const SEXES = {
-  male:   "SOTU.Sex.male",
-  female: "SOTU.Sex.female"
+  human:  "SOTU.Race.human",
+  dwarf:  "SOTU.Race.dwarf",
+  hobbit: "SOTU.Race.hobbit",
+  elf:    "SOTU.Race.elf"
 };
 
 /** { clave: texto localizado } para usar en <select>. */

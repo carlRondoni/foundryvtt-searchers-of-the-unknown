@@ -1,12 +1,6 @@
 .sotu .sotu-sheet { display: flex; flex-direction: column; gap: 8px; padding: 8px; height: 100%; overflow-y: auto; }
 .sotu .sotu-header { display: flex; flex-direction: column; gap: 6px; }
 .sotu .sotu-name { font-size: 1.6rem; font-weight: bold; }
-.sotu .sotu-name-row { display: flex; align-items: center; gap: 6px; }
-.sotu .sotu-name-row .sotu-name { flex: 1; }
-.sotu .sotu-name-row button {
-  flex: 0 0 auto; width: 2.4rem; height: var(--input-height, 2rem);
-  margin: 0; padding: 0; line-height: 1;
-}
 
 /* Pestañas / Tabs */
 .sotu .sotu-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--color-border-dark-tertiary, #888); }
@@ -42,11 +36,4 @@
 /* Trasfondo / Background */
 .sotu .sotu-race { display: flex; align-items: center; gap: 6px; }
 .sotu .sotu-race select { flex: 1; height: var(--input-height, 2rem); }
-.sotu .sotu-race .sotu-sex { flex: 0 0 auto; width: auto; }
-.sotu .sotu-race button {
-  flex: 0 0 auto; width: auto; height: var(--input-height, 2rem);
-  margin: 0; padding: 0 0.7rem; line-height: 1;
-}
-.sotu .sotu-background { display: flex; flex-wrap: wrap; gap: 6px; }
-.sotu .sotu-background button { flex: 1 1 auto; width: auto; margin: 0; }
 .sotu .sotu-bio { min-height: 260px; resize: vertical; }

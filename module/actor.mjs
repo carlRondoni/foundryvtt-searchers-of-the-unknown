@@ -1,6 +1,4 @@
-import { RACES, WEAPONS, loc } from "./config.mjs";
-import { BACKGROUND_TABLES, findTable, tableText } from "./tables.mjs";
-import { randomName } from "./names.mjs";
+import { loc } from "./config.mjs";
 
 export class SotuActor extends Actor {
 
@@ -12,11 +10,6 @@ export class SotuActor extends Actor {
 
   get speaker() {
     return ChatMessage.getSpeaker({ actor: this });
-  }
-
-  /** Máximo de armas al crear: 3, o 2 si lleva escudo. */
-  get weaponLimit() {
-    return this.system.shield ? 2 : 3;
   }
 
   /** Tirada de d20 "por debajo": éxito si el resultado es <= objetivo. */
@@ -47,8 +40,6 @@ export class SotuActor extends Actor {
     const hasTarget = Number.isFinite(targetAC);
     const roll = await new Roll("1d20").evaluate();
     const damage = weapon?.system.damage ?? this.system.damage ?? "1d4";
-    // Dados explosivos: cada dado que saca su máximo vuelve a tirarse y se acumula
-    const formula = damage.replace(/(\d*d\d+)(?![\dx])/gi, "$1x");
     const label = weapon ? loc("SOTU.Chat.AttackWith", { weapon: weapon.name }) : loc("SOTU.Chat.Attack");
 
     let result;
@@ -60,7 +51,7 @@ export class SotuActor extends Actor {
     } else {
       result = loc("SOTU.Chat.HitIf", { hd });
     }
-    const btn = `<button type="button" data-sotu-damage="${formula}" data-actor-uuid="${this.uuid}">${loc("SOTU.Chat.DamageButton", { dice: damage })}</button>`;
+    const btn = `<button type="button" data-sotu-damage="${damage}" data-actor-uuid="${this.uuid}">${loc("SOTU.Chat.DamageButton", { dice: damage })}</button>`;
     await roll.toMessage({ speaker: this.speaker, flavor: `<b>${label}</b><br>${result}<br>${btn}` });
   }
 
@@ -88,10 +79,6 @@ export class SotuActor extends Actor {
   /** PG: nivel d8, quedándose con el mejor entre el nuevo total y el anterior. */
   async rollHP() {
     const s = this.system;
-    if (s.level === 0) {
-      ui.notifications.info(loc("SOTU.Notify.Level0HP"));
-      return this.update({ "system.hp.max": 4, "system.hp.value": 4 });
-    }
     if (s.hpRolled) return ui.notifications.warn(loc("SOTU.Notify.HPAlreadyRolled"));
 
     const formula = `${s.level}d8`;
@@ -122,72 +109,5 @@ export class SotuActor extends Actor {
       "system.xp": s.xp - s.xpNeeded,
       "system.hpRolled": false
     });
-  }
-
-  /** Raza aleatoria: 1d(nº de razas), una sola vez. */
-  async rollRace() {
-    if (this.system.raceRolled) return ui.notifications.warn(loc("SOTU.Notify.RaceAlreadyRolled"));
-    const keys = Object.keys(RACES);
-    const roll = await new Roll(`1d${keys.length}`).evaluate();
-    const race = keys[roll.total - 1];
-    await roll.toMessage({
-      speaker: this.speaker,
-      flavor: loc("SOTU.Chat.RandomRace", { n: keys.length, race: loc(RACES[race]) })
-    });
-    await this.update({ "system.race": race, "system.raceRolled": true });
-  }
-
-  /** Arma aleatoria: categoría (1d4) + arma concreta de esa categoría. */
-  async rollWeapon() {
-    if (this.itemTypes.weapon.length >= this.weaponLimit) {
-      return ui.notifications.warn(loc("SOTU.Notify.WeaponLimit", { n: this.weaponLimit }));
-    }
-    const cats = Object.keys(WEAPONS);
-    const catRoll = await new Roll(`1d${cats.length}`).evaluate();
-    const category = cats[catRoll.total - 1];
-
-    const examples = WEAPONS[category].examples;
-    const nameRoll = await new Roll(`1d${examples.length}`).evaluate();
-    const name = loc(`SOTU.WeaponName.${examples[nameRoll.total - 1]}`);
-
-    await ChatMessage.create({
-      speaker: this.speaker,
-      rolls: [catRoll, nameRoll],
-      sound: CONFIG.sounds.dice,
-      flavor: loc("SOTU.Chat.RandomWeapon", { name, category: loc(WEAPONS[category].short), die: WEAPONS[category].die })
-    });
-    await this.createEmbeddedDocuments("Item", [{ name, type: "weapon", system: { category } }]);
-  }
-
-  /** Tira una tabla de trasfondo (una sola vez) y añade el resultado a la descripción. */
-  async rollBackground(key) {
-    if (!BACKGROUND_TABLES[key]) return;
-    if (this.system.backgroundRolled?.[key]) return ui.notifications.warn(loc("SOTU.Notify.TableAlreadyRolled"));
-    const table = findTable(key);
-    if (!table) return ui.notifications.error(loc("SOTU.Notify.MissingTable", { name: loc(`SOTU.TableName.${key}`) }));
-
-    const title = loc(`SOTU.TableLabel.${key}`);
-    const { roll, results } = await table.roll();
-    const text = results.map(r => tableText(key, r)).join(" ");
-
-    await ChatMessage.create({
-      speaker: this.speaker,
-      rolls: [roll],
-      sound: CONFIG.sounds.dice,
-      flavor: `<b>${title}</b> (${table.formula}) → ${text}`
-    });
-
-    const bio = this.system.biography?.trim();
-    const entry = `${title}: ${text}`;
-    await this.update({
-      "system.biography": bio ? `${bio}\n\n${entry}` : entry,
-      [`system.backgroundRolled.${key}`]: true
-    });
-  }
-
-  /** Nombre aleatorio según raza y sexo (se puede repetir). */
-  async rollName() {
-    const name = randomName(this.system.race, this.system.sex);
-    await this.update({ name, "prototypeToken.name": name });
   }
 }
