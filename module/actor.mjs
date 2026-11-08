@@ -26,8 +26,8 @@ export class SotuActor extends Actor {
   }
 
   /** Tirada de d20 "por debajo": éxito si el resultado es <= objetivo. */
-  async rollUnder(label, target) {
-    const roll = await new Roll("1d20").evaluate();
+  async rollUnder(label, target, formula = "1d20") {
+    const roll = await new Roll(formula).evaluate();
     const ok = roll.total <= target;
     await roll.toMessage({
       speaker: this.speaker,
@@ -36,9 +36,10 @@ export class SotuActor extends Actor {
     return ok;
   }
 
-  /** Sigilo y proezas: d20 <= CA + nivel */
-  stealth() {
-    return this.rollUnder(loc("SOTU.Chat.Stealth"), this.system.ac + this.system.hd);
+  /** Sigilo y proezas: d20 <= CA + nivel. Si el DJ la considera fácil, 1d10. */
+  stealth(easy = false) {
+    const label = loc(easy ? "SOTU.Chat.StealthEasy" : "SOTU.Chat.Stealth");
+    return this.rollUnder(label, this.system.ac + this.system.hd, easy ? "1d10" : "1d20");
   }
 
   /** Salvación: d20 <= nivel + 4 */
@@ -72,6 +73,24 @@ export class SotuActor extends Actor {
   async danger(formula) {
     const roll = await new Roll(formula).evaluate();
     await roll.toMessage({ speaker: this.speaker, flavor: loc("SOTU.Chat.DangerFlavor", { formula }) });
+  }
+
+  /** Pergamino: un solo uso, si el nivel del conjuro es <= nivel del PJ. Su daño es un peligro. */
+  async useScroll(item) {
+    const { level, danger, description } = item.system;
+    if (level > this.system.level) {
+      return ui.notifications.warn(loc("SOTU.Notify.ScrollLevel", { level, actorLevel: this.system.level }));
+    }
+    const esc = foundry.utils.escapeHTML;
+    let text = loc("SOTU.Chat.ScrollUse", { name: esc(this.name), scroll: esc(item.name), level });
+    if (description?.trim()) text += `<br>${esc(description.trim())}`;
+    if (danger) {
+      const roll = await new Roll(danger).evaluate();
+      await roll.toMessage({ speaker: this.speaker, flavor: `${text}<br>${loc("SOTU.Chat.DangerFlavor", { formula: danger })}` });
+    } else {
+      await ChatMessage.create({ speaker: this.speaker, content: text });
+    }
+    return item.delete();
   }
 
   /** Moral del monstruo: 1d10 > DG => se retira o se rinde */
