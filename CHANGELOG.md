@@ -4,6 +4,19 @@
 
 All notable changes to this project are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and versions follow `0.MINOR.PATCH` (new feature → minor, fix → patch).
 
+## [0.6.4] - Level up button
+
+### Changed
+- The **Level up** button only appears when the character has the XP needed.
+
+## [0.6.3] - Rest below 0 HP
+
+### Fixed
+- **Rest** no longer restores the HP of a character below 0 HP, as the rules require. A **Long rest** button replaces it while the character is wounded, restores all HP and posts it to the chat.
+
+### Added
+- Wounded characters (below 0 HP) are shown in red with "Wounded" on the sheet, and their token gets the *Bleeding* status.
+
 ## [0.6.2] - Manifest URLs
 
 ### Added

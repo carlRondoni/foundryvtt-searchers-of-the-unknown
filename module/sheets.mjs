@@ -18,6 +18,7 @@ export class SotuActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       stealth: SotuActorSheet.#stealth,
       save: SotuActorSheet.#save,
       rest: SotuActorSheet.#rest,
+      longRest: SotuActorSheet.#longRest,
       rollHP: SotuActorSheet.#rollHP,
       levelUp: SotuActorSheet.#levelUp,
       danger: SotuActorSheet.#danger,
@@ -41,6 +42,8 @@ export class SotuActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       actor,
       system: actor.system,
       isCharacter,
+      wounded: actor.wounded,
+      canLevelUp: isCharacter && actor.system.xp >= actor.system.xpNeeded,
       tabs: [
         { id: "sheet", label: loc("SOTU.Sheet.TabSheet"), active: this.#tab === "sheet" },
         {
@@ -67,6 +70,7 @@ export class SotuActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
   static #stealth() { return this.document.stealth(); }
   static #save() { return this.document.save(); }
   static #rest() { return this.document.rest(); }
+  static #longRest() { return this.document.longRest(); }
   static #rollHP() { return this.document.rollHP(); }
   static #levelUp() { return this.document.levelUp(); }
   static #danger(event, target) { return this.document.danger(target.dataset.dice); }

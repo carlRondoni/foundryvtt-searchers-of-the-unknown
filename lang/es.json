@@ -13,6 +13,7 @@
   "SOTU.Sheet.HD": "DG",
   "SOTU.Sheet.Attacks": "#AT",
   "SOTU.Sheet.HP": "PG",
+  "SOTU.Sheet.Wounded": "Herido",
   "SOTU.Sheet.GearLegend": "Equipo y experiencia",
   "SOTU.Sheet.Armor": "Armadura",
   "SOTU.Sheet.Shield": "Escudo (CA −1, MV −1)",
@@ -27,6 +28,7 @@
   "SOTU.Sheet.Stealth": "Sigilo / proezas",
   "SOTU.Sheet.Save": "Salvación",
   "SOTU.Sheet.Rest": "Descansar",
+  "SOTU.Sheet.LongRest": "Descanso largo",
   "SOTU.Sheet.Morale": "Moral",
   "SOTU.Sheet.Danger": "Peligro:",
   "SOTU.Sheet.Weapons": "Armas",
@@ -69,6 +71,8 @@
   "SOTU.Chat.MoraleFight": "SIGUE LUCHANDO",
   "SOTU.Chat.HPRoll": "<b>Puntos de golpe</b> ({formula}) · {roll} vs {old} actuales → máx. {max}",
   "SOTU.Chat.LevelUp": "<b>{name} sube a nivel {level}</b> · toca tirar los PG",
+  "SOTU.Chat.LongRest": "<b>{name}</b> hace un descanso largo y recupera todos los PG",
   "SOTU.Notify.HPAlreadyRolled": "Ya tiraste los PG de este nivel.",
-  "SOTU.Notify.NeedXP": "Necesitas {xp} PX para subir de nivel."
+  "SOTU.Notify.NeedXP": "Necesitas {xp} PX para subir de nivel.",
+  "SOTU.Notify.Wounded": "Por debajo de 0 PG: un descanso normal no basta. Usa un descanso largo o magia curativa."
 }

@@ -8,6 +8,19 @@ export class SotuActor extends Actor {
     return { ac: s.ac ?? 0, mv: s.mv ?? 0, hd: s.hd ?? 1, level: s.hd ?? 1 };
   }
 
+  /** Herido: PJ por debajo de 0 PG. No se recupera con un descanso normal. */
+  get wounded() {
+    return this.type === "character" && this.system.hp.value < 0;
+  }
+
+  /** Marca el token como "Sangrando" mientras el PJ esté herido. */
+  _onUpdate(changed, options, userId) {
+    super._onUpdate(changed, options, userId);
+    // Solo el cliente que hizo el cambio, para no repetirlo en cada jugador conectado
+    if (userId !== game.user.id || this.type !== "character" || changed.system?.hp === undefined) return;
+    this.toggleStatusEffect("bleeding", { active: this.wounded });
+  }
+
   get speaker() {
     return ChatMessage.getSpeaker({ actor: this });
   }
@@ -71,8 +84,16 @@ export class SotuActor extends Actor {
     });
   }
 
-  /** Descanso: todos los PG se restauran al máximo. */
+  /** Descanso: todos los PG se restauran al máximo, salvo si el PJ está por debajo de 0 PG. */
   rest() {
+    if (this.wounded) return ui.notifications.warn(loc("SOTU.Notify.Wounded"));
+    return this.update({ "system.hp.value": this.system.hp.max });
+  }
+
+  /** Descanso largo: el DJ decide cuándo ha pasado; recupera todos los PG de un PJ herido. */
+  async longRest() {
+    if (!this.wounded) return;
+    await ChatMessage.create({ speaker: this.speaker, content: loc("SOTU.Chat.LongRest", { name: this.name }) });
     return this.update({ "system.hp.value": this.system.hp.max });
   }
 

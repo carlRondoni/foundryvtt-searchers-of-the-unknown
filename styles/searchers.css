@@ -16,6 +16,8 @@
 .sotu .sotu-stats { display: flex; gap: 8px; }
 .sotu .stat { flex: 1; text-align: center; border: 1px solid var(--color-border-dark-tertiary, #888); border-radius: 4px; padding: 4px; }
 .sotu .stat.hp { flex: 2; }
+.sotu .stat.hp.wounded { border-color: var(--color-level-error, #c0392b); }
+.sotu .stat.hp.wounded label { color: var(--color-level-error, #c0392b); font-weight: bold; }
 .sotu .stat label { display: block; font-size: 0.75rem; text-transform: uppercase; }
 .sotu .stat .big { font-size: 1.6rem; font-weight: bold; }
 .sotu .hp-inputs { display: flex; align-items: center; gap: 4px; }

@@ -4,6 +4,19 @@
 
 Aquí se documentan los cambios importantes del proyecto. El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y las versiones siguen `0.MINOR.PATCH` (función nueva → minor, corrección → patch).
 
+## [0.6.4] - Botón de subir de nivel
+
+### Cambiado
+- El botón **Subir de nivel** solo aparece cuando el personaje tiene los PX necesarios.
+
+## [0.6.3] - Descanso por debajo de 0 PG
+
+### Corregido
+- **Descansar** ya no restaura los PG de un personaje por debajo de 0 PG, como piden las reglas. Mientras está herido, lo sustituye un botón **Descanso largo** que restaura todos los PG y lo anuncia en el chat.
+
+### Añadido
+- Los personajes heridos (por debajo de 0 PG) se ven en rojo con "Herido" en la ficha, y su token recibe el estado *Sangrando*.
+
 ## [0.6.2] - URLs del manifiesto
 
 ### Añadido

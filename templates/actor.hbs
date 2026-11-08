@@ -29,7 +29,7 @@
         {{#if isCharacter}}<span class="big">{{system.attacks}}</span>
         {{else}}<input type="number" name="system.attacks" value="{{system.attacks}}" min="1">{{/if}}
       </div>
-      <div class="stat hp"><label>{{localize 'SOTU.Sheet.HP'}}</label>
+      <div class="stat hp {{#if wounded}}wounded{{/if}}"><label>{{localize 'SOTU.Sheet.HP'}}{{#if wounded}} · {{localize 'SOTU.Sheet.Wounded'}}{{/if}}</label>
         <span class="hp-inputs">
           <input type="number" name="system.hp.value" value="{{system.hp.value}}">
           /
@@ -50,7 +50,9 @@
         {{#unless system.hpRolled}}
           <button type="button" data-action="rollHP">{{localize 'SOTU.Sheet.RollHP' level=system.level}}</button>
         {{/unless}}
-        <button type="button" data-action="levelUp">{{localize 'SOTU.Sheet.LevelUp'}}</button>
+        {{#if canLevelUp}}
+          <button type="button" data-action="levelUp">{{localize 'SOTU.Sheet.LevelUp'}}</button>
+        {{/if}}
       </div>
     </fieldset>
     {{else}}
@@ -67,7 +69,11 @@
         <button type="button" data-action="attack">{{localize 'SOTU.Sheet.Attack'}}{{#unless isCharacter}} ({{system.damage}}){{/unless}}</button>
         <button type="button" data-action="stealth">{{localize 'SOTU.Sheet.Stealth'}}</button>
         <button type="button" data-action="save">{{localize 'SOTU.Sheet.Save'}}</button>
-        <button type="button" data-action="rest">{{localize 'SOTU.Sheet.Rest'}}</button>
+        {{#if wounded}}
+          <button type="button" data-action="longRest">{{localize 'SOTU.Sheet.LongRest'}}</button>
+        {{else}}
+          <button type="button" data-action="rest">{{localize 'SOTU.Sheet.Rest'}}</button>
+        {{/if}}
         {{#unless isCharacter}}<button type="button" data-action="morale">{{localize 'SOTU.Sheet.Morale'}}</button>{{/unless}}
       </div>
       <div class="buttons">
