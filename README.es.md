@@ -3,7 +3,7 @@
 **Español** · [English](README.md)
 
 ![Foundry VTT](https://img.shields.io/badge/Foundry-v13%20%E2%80%93%20v14-orange)
-![Versión](https://img.shields.io/badge/versi%C3%B3n-0.6.2-blue)
+![Versión](https://img.shields.io/badge/versi%C3%B3n-0.6.4-blue)
 ![Licencia](https://img.shields.io/badge/licencia-MIT-green)
 
 Sistema de juego para [Foundry VTT](https://foundryvtt.com) basado en **Searchers of the Unknown**, la forma mínima de jugar D&D old-school de Nicolas Dessaux: CA descendente, d20 por debajo, PG = dados de golpe y fichas que caben en una línea.
@@ -16,6 +16,7 @@ La interfaz es **bilingüe (español / inglés)** y sigue el idioma de Foundry d
 - Los personajes empiezan en **nivel 1 y tiran 1d8 PG**. Al subir de nivel se vuelven a tirar todos los dados de golpe y se conserva el mejor total.
 - Número de ataques según el nivel (1, 2 en nivel 5, 3 en nivel 9...).
 - Tiradas integradas: **ataque** (d20 ≤ CA del objetivo + nivel, usa el token marcado), **sigilo y proezas**, **salvación**, **peligros** (1d8 / 2d8 / 4d8) y **moral** de monstruos.
+- **Descansar** restaura todos los PG. Un personaje por debajo de 0 PG necesita un **descanso largo**, y se marca como herido en la ficha y en el token (*Sangrando*).
 - **Iniciativa** `1d10 + CA`.
 - Armas como objetos (pequeña d4, distancia d6, cuerpo a cuerpo d8, dos manos d10).
 - Selector de **raza** (humano, enano, hobbit, elfo), sin efecto en las reglas.

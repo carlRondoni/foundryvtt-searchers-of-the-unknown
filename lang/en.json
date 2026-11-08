@@ -13,6 +13,7 @@
   "SOTU.Sheet.HD": "HD",
   "SOTU.Sheet.Attacks": "#AT",
   "SOTU.Sheet.HP": "HP",
+  "SOTU.Sheet.Wounded": "Wounded",
   "SOTU.Sheet.GearLegend": "Gear and experience",
   "SOTU.Sheet.Armor": "Armor",
   "SOTU.Sheet.Shield": "Shield (AC −1, MV −1)",
@@ -27,6 +28,7 @@
   "SOTU.Sheet.Stealth": "Stealth / stunts",
   "SOTU.Sheet.Save": "Saving throw",
   "SOTU.Sheet.Rest": "Rest",
+  "SOTU.Sheet.LongRest": "Long rest",
   "SOTU.Sheet.Morale": "Morale",
   "SOTU.Sheet.Danger": "Danger:",
   "SOTU.Sheet.Weapons": "Weapons",
@@ -69,6 +71,8 @@
   "SOTU.Chat.MoraleFight": "KEEPS FIGHTING",
   "SOTU.Chat.HPRoll": "<b>Hit points</b> ({formula}) · {roll} vs {old} current → max {max}",
   "SOTU.Chat.LevelUp": "<b>{name} reaches level {level}</b> · time to roll HP",
+  "SOTU.Chat.LongRest": "<b>{name}</b> takes a long rest and recovers all HP",
   "SOTU.Notify.HPAlreadyRolled": "You already rolled HP for this level.",
-  "SOTU.Notify.NeedXP": "You need {xp} XP to level up."
+  "SOTU.Notify.NeedXP": "You need {xp} XP to level up.",
+  "SOTU.Notify.Wounded": "Below 0 HP: a normal rest is not enough. Use a long rest or healing magic."
 }
