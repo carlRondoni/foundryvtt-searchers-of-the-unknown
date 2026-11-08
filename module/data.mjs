@@ -78,3 +78,17 @@ export class WeaponData extends TypeDataModel {
     this.damage = (WEAPONS[this.category] ?? WEAPONS.melee).die;
   }
 }
+
+/** Peligros posibles de un pergamino; "" = sin daño. */
+export const SCROLL_DANGERS = ["", "1d8", "2d8", "4d8"];
+
+/** Pergamino: un solo uso; el nivel del conjuro debe ser <= nivel del PJ. */
+export class ScrollData extends TypeDataModel {
+  static defineSchema() {
+    return {
+      level: int(1, 1),
+      danger: new StringField({ required: true, blank: true, initial: "", choices: SCROLL_DANGERS }),
+      description: new StringField({ initial: "" })
+    };
+  }
+}

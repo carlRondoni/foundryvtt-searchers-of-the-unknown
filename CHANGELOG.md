@@ -4,6 +4,14 @@
 
 All notable changes to this project are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and versions follow `0.MINOR.PATCH` (new feature → minor, fix → patch).
 
+## [0.7.0] - Easy actions, initiative per attack, scrolls and starting weapons
+
+### Added
+- **Easy (1d10)** button next to stealth and stunts, for actions the GM considers easy.
+- **Initiative per attack**: a character or monster with several attacks joins combat once per attack ("Orc · attack 2"), and each entry rolls its own initiative. Removing the token from combat removes all its entries.
+- **Scrolls**, a new item type with spell level, optional danger damage (1d8 / 2d8 / 4d8) and description. A character can use one only if the spell level is not above their own; it is posted to the chat and used up.
+- The weapons header shows the starting gear count (three weapons, or two with a shield) and turns red when it is exceeded. Adding more weapons is still allowed.
+
 ## [0.6.4] - Level up button
 
 ### Changed

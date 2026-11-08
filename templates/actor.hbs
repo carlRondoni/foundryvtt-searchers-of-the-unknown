@@ -68,6 +68,7 @@
       <div class="buttons">
         <button type="button" data-action="attack">{{localize 'SOTU.Sheet.Attack'}}{{#unless isCharacter}} ({{system.damage}}){{/unless}}</button>
         <button type="button" data-action="stealth">{{localize 'SOTU.Sheet.Stealth'}}</button>
+        <button type="button" data-action="stealth" data-easy="true">{{localize 'SOTU.Sheet.StealthEasy'}}</button>
         <button type="button" data-action="save">{{localize 'SOTU.Sheet.Save'}}</button>
         {{#if wounded}}
           <button type="button" data-action="longRest">{{localize 'SOTU.Sheet.LongRest'}}</button>
@@ -86,7 +87,7 @@
 
     <fieldset class="sotu-weapons">
       <div class="sotu-weapons-header">
-        <span class="title">{{localize 'SOTU.Sheet.Weapons'}}</span>
+        <span class="title {{#if weaponsOver}}over{{/if}}"{{#if isCharacter}} title="{{localize 'SOTU.Sheet.WeaponLimitHint'}}"{{/if}}>{{localize 'SOTU.Sheet.Weapons'}}{{#if isCharacter}} ({{weapons.length}}/{{weaponMax}}){{/if}}</span>
         <div class="sotu-weapons-buttons">
           <button type="button" data-action="addWeapon" title="{{localize 'SOTU.Sheet.AddWeapon'}}">+</button>
         </div>
@@ -98,12 +99,35 @@
           <span class="wname">{{this.name}}</span>
           <span>{{this.system.damage}}</span>
           <button type="button" data-action="attack" data-item-id="{{this.id}}">{{localize 'SOTU.Sheet.Attack'}}</button>
-          <button type="button" data-action="editWeapon" title="{{localize 'SOTU.Sheet.EditWeapon'}}">✎</button>
-          <button type="button" data-action="deleteWeapon" title="{{localize 'SOTU.Sheet.DeleteWeapon'}}">🗑</button>
+          <button type="button" data-action="editItem" title="{{localize 'SOTU.Sheet.EditWeapon'}}">✎</button>
+          <button type="button" data-action="deleteItem" title="{{localize 'SOTU.Sheet.DeleteWeapon'}}">🗑</button>
         </li>
         {{/each}}
       </ul>
     </fieldset>
+
+    {{#if isCharacter}}
+    <fieldset class="sotu-weapons sotu-scrolls">
+      <div class="sotu-weapons-header">
+        <span class="title">{{localize 'SOTU.Sheet.Scrolls'}}</span>
+        <div class="sotu-weapons-buttons">
+          <button type="button" data-action="addScroll" title="{{localize 'SOTU.Sheet.AddScroll'}}">+</button>
+        </div>
+      </div>
+      <ul>
+        {{#each scrolls}}
+        <li data-item-id="{{this.id}}">
+          <img src="{{this.img}}" width="24" height="24">
+          <span class="wname">{{this.name}}</span>
+          <span>{{localize 'SOTU.Sheet.ScrollLevel' level=this.system.level}}{{#if this.system.danger}} · {{this.system.danger}}{{/if}}</span>
+          <button type="button" data-action="useScroll">{{localize 'SOTU.Sheet.UseScroll'}}</button>
+          <button type="button" data-action="editItem" title="{{localize 'SOTU.Sheet.EditWeapon'}}">✎</button>
+          <button type="button" data-action="deleteItem" title="{{localize 'SOTU.Sheet.DeleteWeapon'}}">🗑</button>
+        </li>
+        {{/each}}
+      </ul>
+    </fieldset>
+    {{/if}}
   </div>
 
   {{!-- ============ TAB: BACKGROUND / DESCRIPTION ============ --}}
