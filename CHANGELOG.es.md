@@ -4,6 +4,14 @@
 
 Aquí se documentan los cambios importantes del proyecto. El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y las versiones siguen `0.MINOR.PATCH` (función nueva → minor, corrección → patch).
 
+## [0.7.0] - Acciones fáciles, iniciativa por ataque, pergaminos y armas iniciales
+
+### Añadido
+- Botón **Fácil (1d10)** junto a sigilo y proezas, para las acciones que el DJ considere fáciles.
+- **Iniciativa por ataque**: un personaje o monstruo con varios ataques entra en el combate una vez por ataque ("Orco · ataque 2") y cada entrada tira su propia iniciativa. Al quitar el token del combate se quitan todas sus entradas.
+- **Pergaminos**, un nuevo tipo de objeto con nivel del conjuro, daño opcional como peligro (1d8 / 2d8 / 4d8) y descripción. Un personaje solo puede usarlo si el nivel del conjuro no supera el suyo; se publica en el chat y se gasta.
+- El encabezado de las armas muestra el recuento del equipo inicial (tres armas, o dos con escudo) y se pone en rojo si se supera. Se pueden seguir añadiendo armas.
+
 ## [0.6.4] - Botón de subir de nivel
 
 ### Cambiado

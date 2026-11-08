@@ -1,8 +1,18 @@
 <section class="sotu-sheet">
   <input class="sotu-name" type="text" name="name" value="{{item.name}}" placeholder="{{localize 'SOTU.Sheet.Name'}}">
-  <label>{{localize 'SOTU.Sheet.ItemCategory'}}
-    <select name="system.category">{{selectOptions categories selected=system.category}}</select>
-  </label>
-  <div>{{localize 'SOTU.Sheet.ItemDamage'}} <b>{{system.damage}}</b></div>
+  {{#if isWeapon}}
+    <label>{{localize 'SOTU.Sheet.ItemCategory'}}
+      <select name="system.category">{{selectOptions categories selected=system.category}}</select>
+    </label>
+    <div>{{localize 'SOTU.Sheet.ItemDamage'}} <b>{{system.damage}}</b></div>
+  {{/if}}
+  {{#if isScroll}}
+    <label>{{localize 'SOTU.Sheet.SpellLevel'}}
+      <input type="number" name="system.level" value="{{system.level}}" min="1">
+    </label>
+    <label>{{localize 'SOTU.Sheet.ItemDanger'}}
+      <select name="system.danger">{{selectOptions dangers selected=system.danger}}</select>
+    </label>
+  {{/if}}
   <textarea name="system.description" placeholder="{{localize 'SOTU.Sheet.ItemDescription'}}">{{system.description}}</textarea>
 </section>

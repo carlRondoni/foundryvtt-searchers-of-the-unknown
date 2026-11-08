@@ -3,7 +3,7 @@
 [Español](README.es.md) · **English**
 
 ![Foundry VTT](https://img.shields.io/badge/Foundry-v13%20%E2%80%93%20v14-orange)
-![Version](https://img.shields.io/badge/version-0.6.4-blue)
+![Version](https://img.shields.io/badge/version-0.7.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 A game system for [Foundry VTT](https://foundryvtt.com) based on **Searchers of the Unknown**, Nicolas Dessaux's minimalist way to play old-school D&D: descending AC, roll-under d20, HP = hit dice, and characters that fit on one line.
@@ -15,10 +15,11 @@ The interface is **bilingual (English / Spanish)** and follows each user's Found
 - **AC and MV are calculated** from armor and shield.
 - Characters start at **level 1 and roll 1d8 HP**. On level up, all hit dice are re-rolled and the better total is kept.
 - Number of attacks by level (1, 2 at level 5, 3 at level 9...).
-- Built-in rolls: **attack** (d20 ≤ target AC + level, uses the targeted token), **stealth and stunts**, **saving throw**, **dangers** (1d8 / 2d8 / 4d8) and monster **morale**.
+- Built-in rolls: **attack** (d20 ≤ target AC + level, uses the targeted token), **stealth and stunts** (with an **easy** 1d10 version), **saving throw**, **dangers** (1d8 / 2d8 / 4d8) and monster **morale**.
 - **Rest** restores all HP. A character below 0 HP needs a **long rest** instead, and is marked as wounded on the sheet and on the token (*Bleeding*).
-- **Initiative** `1d10 + AC`.
-- Weapons as items (small d4, ranged d6, melee d8, two-handed d10).
+- **Initiative** `1d10 + AC`. Characters and monsters with several attacks join combat once per attack, so they roll initiative several times.
+- Weapons as items (small d4, ranged d6, melee d8, two-handed d10). The sheet counts them against the starting gear: three weapons, or two and a shield.
+- **Scrolls**: single use, only if the spell level is not above the character's level. Their damage is rolled as a danger.
 - **Race** selector (human, dwarf, hobbit, elf), with no effect on the rules.
 - Two-tab sheet: **Sheet** and **Background**.
 

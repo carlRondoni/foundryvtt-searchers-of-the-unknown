@@ -30,6 +30,7 @@
 .sotu .sotu-weapons .wname { flex: 1; }
 .sotu .sotu-weapons-header { display: flex; align-items: center; justify-content: space-between; }
 .sotu .sotu-weapons-header .title { font-weight: bold; }
+.sotu .sotu-weapons-header .title.over { color: var(--color-level-error, #c0392b); }
 .sotu .sotu-weapons-buttons { display: flex; align-items: center; gap: 6px; }
 .sotu .sotu-weapons-buttons button {
   flex: 0 0 auto; width: 2rem; height: 2rem; margin: 0; padding: 0; line-height: 1;

@@ -1,4 +1,5 @@
 import { SYSTEM_ID, ARMORS, WEAPONS, RACES, loc, localized } from "./config.mjs";
+import { SCROLL_DANGERS } from "./data.mjs";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2, ItemSheetV2 } = foundry.applications.sheets;
@@ -24,8 +25,10 @@ export class SotuActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       danger: SotuActorSheet.#danger,
       morale: SotuActorSheet.#morale,
       addWeapon: SotuActorSheet.#addWeapon,
-      editWeapon: SotuActorSheet.#editWeapon,
-      deleteWeapon: SotuActorSheet.#deleteWeapon,
+      addScroll: SotuActorSheet.#addScroll,
+      useScroll: SotuActorSheet.#useScroll,
+      editItem: SotuActorSheet.#editItem,
+      deleteItem: SotuActorSheet.#deleteItem,
       changeTab: SotuActorSheet.#changeTab
     }
   };
@@ -36,6 +39,9 @@ export class SotuActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     const ctx = await super._prepareContext(options);
     const actor = this.document;
     const isCharacter = actor.type === "character";
+    const weapons = actor.itemTypes.weapon;
+    // Equipo inicial: tres armas, o dos armas y un escudo (solo informativo)
+    const weaponMax = actor.system.shield ? 2 : 3;
     const ac = loc("SOTU.Sheet.AC");
     const mv = loc("SOTU.Sheet.MV");
     return Object.assign(ctx, {
@@ -56,7 +62,10 @@ export class SotuActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       showBackground: this.#tab === "background",
       races: localized(RACES, loc),
       armors: localized(ARMORS, a => `${loc(a.label)} (${ac} ${a.ac}, ${mv} ${a.mv})`),
-      weapons: actor.itemTypes.weapon
+      weapons,
+      weaponMax,
+      weaponsOver: isCharacter && weapons.length > weaponMax,
+      scrolls: actor.itemTypes.scroll
     });
   }
 
@@ -67,7 +76,7 @@ export class SotuActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
   static #attack(event, target) {
     return this.document.attack(target.dataset.itemId ? this.#item(target) : null);
   }
-  static #stealth() { return this.document.stealth(); }
+  static #stealth(event, target) { return this.document.stealth(target.dataset.easy === "true"); }
   static #save() { return this.document.save(); }
   static #rest() { return this.document.rest(); }
   static #longRest() { return this.document.longRest(); }
@@ -78,8 +87,15 @@ export class SotuActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
   static #addWeapon() {
     return this.document.createEmbeddedDocuments("Item", [{ name: loc("SOTU.Sheet.NewWeapon"), type: "weapon" }]);
   }
-  static #editWeapon(event, target) { return this.#item(target)?.sheet.render(true); }
-  static #deleteWeapon(event, target) { return this.#item(target)?.delete(); }
+  static #addScroll() {
+    return this.document.createEmbeddedDocuments("Item", [{ name: loc("SOTU.Sheet.NewScroll"), type: "scroll" }]);
+  }
+  static #useScroll(event, target) {
+    const item = this.#item(target);
+    return item && this.document.useScroll(item);
+  }
+  static #editItem(event, target) { return this.#item(target)?.sheet.render(true); }
+  static #deleteItem(event, target) { return this.#item(target)?.delete(); }
 
   static #changeTab(event, target) {
     this.#tab = target.dataset.navTab;
@@ -100,10 +116,14 @@ export class SotuItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
 
   async _prepareContext(options) {
     const ctx = await super._prepareContext(options);
+    const item = this.document;
     return Object.assign(ctx, {
-      item: this.document,
-      system: this.document.system,
-      categories: localized(WEAPONS, w => `${loc(w.label)} · ${w.die}`)
+      item,
+      system: item.system,
+      isWeapon: item.type === "weapon",
+      isScroll: item.type === "scroll",
+      categories: localized(WEAPONS, w => `${loc(w.label)} · ${w.die}`),
+      dangers: Object.fromEntries(SCROLL_DANGERS.map(d => [d, d || loc("SOTU.Sheet.NoDanger")]))
     });
   }
 }
